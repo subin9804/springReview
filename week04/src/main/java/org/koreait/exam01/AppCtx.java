@@ -15,6 +15,7 @@ public class AppCtx {
 		DataSource ds = new DataSource();
 		String url = "jdbc:mysql://localhost:3306/springdb";
 		ds.setUrl(url);
+		ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		ds.setUsername("root");
 		ds.setPassword("aA!123456");
 		ds.setInitialSize(2);	// 생성할 초기 커넥션 개수를 지정
