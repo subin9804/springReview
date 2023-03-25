@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	
+	<head>
+		<title th:if="${pageTitle != null}" th:text="${pageTitle}">연습!</title>
+		<link rel="styleSheet" type="text/css" th:href="@{/css/style.css}">
+		<link th:each="cssPath : ${addCss}" rel="styleSheet" type="text/css" th:href="@{/css/{path}.css(path=${cssPath})}">
+		<th:block layout:fragment="addCss"></th:block>	<!-- 컨트롤러가 없는 페이지도 css혹은 js를 교체하여 적용할 수 있도록 함 -->
+		
+		<script th:src="@{/js/common.js}"></script>
+		<script th:each="jsPath : ${addScript}" th:src="@{/js/{path}.js(path=${jsPath})}"></script>
+		<th:block layout:fragment="addScript"></th:block>
+		
+	</head>
+	<body>
+		<header th:replace="outlines/commons::header"></header>
+		
+		<main layout:fragment="content"></main>
+		
+		<footer th:replace="outlines/commons::footer"></footer>
+	</body>
+</html>

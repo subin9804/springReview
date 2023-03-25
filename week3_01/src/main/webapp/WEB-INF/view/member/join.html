@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<meta charset="utf-8" />
-		<title>회원가입</title>
+		<title>연습!</title>
 	</head>
 	<body>
-		<a href="#" th:href="@{/hello?userId={id}&userNm={nm}(id=${memberJoin.userId}, nm=${memberJoin.userNm})}">Hello Link</a>
-		<form method="post" action="join" th:object="${memberJoin}">
+		[[${memberJoin.userId}]]
+		<th:block th:object="${memberJoin}">
 			<dl>
-				<dt>아이디</dt>
-				<dd th:utext="*{userId}">id100</dd>	<!-- th:utext는 html까지 인식하여 출력해준다. -->
+				<dt th:text="#{member.userId}"></dt>
+				<dd th:utext="*{userId}"></dd>
 			</dl>
 			<dl>
-				<dt>비밀번호</dt>
-				<dd th:text="*{userPw}">123456</dd>
+				<dt th:text="#{member.userPw}"></dt>
+				<dd th:text="*{userPw}"></dd>
 			</dl>
 			<dl>
-				<dt>회원명</dt>
-				<dd th:text="*{userNm}">이이름</dd>
+				<dt th:text="#{member.userNm}"></dt>
+				<dd th:text="*{userNm}"></dd>
 			</dl>
-			<button type="submit">가입하기</button>
-		</form>
+
+			<a href="#" th:href="@{/member/login(param1=*{userNm}, param2='abc')}">로그인</a>
+			<a href="#" th:href="@{/member/{id}(id=*{userPw})}">회원!</a>
+		</th:block>
 	</body>
 </html>
