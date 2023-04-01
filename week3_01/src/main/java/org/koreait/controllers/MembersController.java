@@ -8,9 +8,17 @@ import org.koreait.models.member.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class MembersController {
+	
+	@GetMapping("/members/{id}")
+	public String info(@PathVariable(required=false, name="id") String userid) {
+		System.out.println(userid);
+		
+		return "member/info";
+	}
 
 	@GetMapping("/members")
 	public String members(Model model) {

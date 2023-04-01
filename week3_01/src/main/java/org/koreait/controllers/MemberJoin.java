@@ -1,10 +1,27 @@
 package org.koreait.controllers;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class MemberJoin {
 
-	private String userId;
+	@NotBlank(message="아이디를 입력하세요")
+	@Size(min=6, message="아이디는 6자리 이상 입력하세요")
+	private String userId;	
+	
+	@NotBlank(message="비밀번호를 입력하세요")
+	@Size(min=8, message="비밀번호는 8자리 이상 입력하세요")
 	private String userPw;
+	
+	@NotBlank(message="비밀번호를 확인하세요")
+	private String userPwRe;
+	
+	@NotBlank(message="회원명을 입력하세요")
 	private String userNm;
+	
+	@AssertTrue(message="약관에 동의하세요")
+	private boolean agree;
 	
 	public String getUserId() {
 		return userId;
@@ -18,16 +35,29 @@ public class MemberJoin {
 	public void setUserPw(String userPw) {
 		this.userPw = userPw;
 	}
+	public String getUserPwRe() {
+		return userPwRe;
+	}
+	public void setUserPwRe(String userPwRe) {
+		this.userPwRe = userPwRe;
+	}
 	public String getUserNm() {
 		return userNm;
 	}
 	public void setUserNm(String userNm) {
 		this.userNm = userNm;
 	}
+	public boolean isAgree() {
+		return agree;
+	}
+	public void setAgree(boolean agree) {
+		this.agree = agree;
+	}
 	
 	
 	@Override
 	public String toString() {
-		return "MemberJoin [userId=" + userId + ", userPw=" + userPw + ", userNm=" + userNm + "]";
+		return "MemberJoin [userId=" + userId + ", userPw=" + userPw + ", userPwRe=" + userPwRe + ", userNm=" + userNm
+				+ ", agree=" + agree + "]";
 	}
 }

@@ -1,26 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>연습!</title>
-	</head>
-	<body>
-		[[${memberJoin.userId}]]
-		<th:block th:object="${memberJoin}">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/main}">
+	
+	<main layout:fragment="content">
+		<h1>회원가입</h1>
+		<form method="post" th:action="@{/member/join}" autocomplete="off" th:object="${memberJoin}">
 			<dl>
-				<dt th:text="#{member.userId}"></dt>
-				<dd th:utext="*{userId}"></dd>
+				<dt>아이디</dt>
+				<dd>
+					<input type="text" name="userId" th:field="*{userId}">
+					<div th:each="err : ${#fields.errors('userId')}" th:text="${err}"></div>
+				</dd>
 			</dl>
 			<dl>
-				<dt th:text="#{member.userPw}"></dt>
-				<dd th:text="*{userPw}"></dd>
+				<dt>비밀번호</dt>
+				<dd>
+					<input type="password" name="userPw" th:field="*{userPw}">
+					<div th:each="err : ${#fields.errors('userPw')}" th:text="${err}"></div>
+				</dd>
 			</dl>
 			<dl>
-				<dt th:text="#{member.userNm}"></dt>
-				<dd th:text="*{userNm}"></dd>
+				<dt>비밀번호 확인</dt>
+				<dd>
+					<input type="password" name="userPwRe" th:field="*{userPwRe}">
+					<div th:each="err : ${#fields.errors('userPwRe')}" th:text="${err}"></div>
+				</dd>
+			</dl>
+			<dl>
+				<dt>회원명</dt>
+				<dd>
+					<input type="text" name="userNm" th:field="*{userNm}">
+					<div th:each="err : ${#fields.errors('userNm')}" th:text="${err}"></div>
+				</dd>
 			</dl>
 
-			<a href="#" th:href="@{/member/login(param1=*{userNm}, param2='abc')}">로그인</a>
-			<a href="#" th:href="@{/member/{id}(id=*{userPw})}">회원!</a>
-		</th:block>
-	</body>
+			<div>
+				<input type="checkbox" name="agree" value="true" th:field="*{agree}" id="agree">
+				<label for="agree">회원가입 약관에 동의합니다.</label>
+				<div th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
+			</div>
+			
+			<button type="submit">가입하기</button>
+		</form>
+	</main>
 </html>

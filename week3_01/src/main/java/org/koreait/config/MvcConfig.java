@@ -1,14 +1,17 @@
 package org.koreait.config;
 
 import org.koreait.CommonUtil;
+import org.koreait.interceptors.MemberOnlyInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -22,6 +25,7 @@ import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 
 @Configuration
 @EnableWebMvc
+@Import(DbConfig.class)
 public class MvcConfig implements WebMvcConfigurer {
 
 	
@@ -30,6 +34,11 @@ public class MvcConfig implements WebMvcConfigurer {
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addViewController("/")
 				.setViewName("main/index");
+		
+		registry.addViewController("/mypage")
+				.setViewName("member/mypage");
+	
+		
 	}
 
 	@Autowired
@@ -91,5 +100,16 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Bean
 	public CommonUtil cUtil() {
 		return new CommonUtil();
+	}
+
+	@Override
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(memberOnlyInterceptor())
+				.addPathPatterns("/mypage/**");	// mypage를 포함한 하위 모든 경로와 파일에 접속 시 memberOnlyInterceptor이 호출된다.
+	}
+	
+	@Bean
+	public MemberOnlyInterceptor memberOnlyInterceptor() {
+		return new MemberOnlyInterceptor();
 	}
 }
