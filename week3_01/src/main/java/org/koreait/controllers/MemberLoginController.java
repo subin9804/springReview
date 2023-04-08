@@ -3,6 +3,7 @@ package org.koreait.controllers;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.koreait.models.member.MemberLoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
